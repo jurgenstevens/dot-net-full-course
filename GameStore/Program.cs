@@ -26,8 +26,13 @@ List<GameDto> games = [
    ),
 ];
 
+// GET http://localhost:5202/games index route for games in JSON format
 app.MapGet("games", () => games);
 
-app.MapGet("/", () => "Hello World!");
+// GET http://localhost:5202/games/:gameId
+app.MapGet("games/{GameId}", (int GameId) => games.Find(game => game.GameId == GameId));
+
+// root route rendering "Hello World!" text
+// app.MapGet("/", () => "Hello World!");
 
 app.Run();
