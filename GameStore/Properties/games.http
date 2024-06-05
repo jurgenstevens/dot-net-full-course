@@ -1,6 +1,17 @@
 GET http://localhost:5202/games
 
 # The three number hashes are to split requests or else it'll hit the very top one only instead of the one you clicked on to send a request
-### 
 
+### 
 GET http://localhost:5202/games/1
+
+###
+POST http://localhost:5202/games
+Content-Type: application/json
+
+{
+  "name": "Minecraft",
+  "genre": "Kids and Family",
+  "price": 19.99,
+  "releaseData": "2011-11-18"
+}

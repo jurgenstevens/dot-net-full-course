@@ -43,7 +43,7 @@ app.MapPost("games", (CreateGameDto newGame) => {
       newGame.ReleaseDate
    );
    games.Add(game);
-   return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.GameId}, game);
+   return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.GameId}, game);
 });
 
 
