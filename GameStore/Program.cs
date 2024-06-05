@@ -2,6 +2,7 @@ using GameStore.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
+const string GetGameEndpointName = "GetGame";
 
 List<GameDto> games = [
    new (
@@ -30,7 +31,22 @@ List<GameDto> games = [
 app.MapGet("games", () => games);
 
 // GET http://localhost:5202/games/:gameId
-app.MapGet("games/{GameId}", (int GameId) => games.Find(game => game.GameId == GameId));
+app.MapGet("games/{GameId}", (int GameId) => games.Find(game => game.GameId == GameId)).WithName(GetGameEndpointName);
+
+// POST http://localhost:5202/games/
+app.MapPost("games", (CreateGameDto newGame) => {
+   GameDto game = new(
+      games.Count + 1,
+      newGame.Name,
+      newGame.Genre,
+      newGame.Price,
+      newGame.ReleaseDate
+   );
+   games.Add(game);
+   return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.GameId}, game);
+});
+
+
 
 // root route rendering "Hello World!" text
 // app.MapGet("/", () => "Hello World!");
