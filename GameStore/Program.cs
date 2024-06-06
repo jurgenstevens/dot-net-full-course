@@ -1,3 +1,4 @@
+using GameStore;
 using GameStore.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,6 +47,19 @@ app.MapPost("games", (CreateGameDto newGame) => {
    return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.GameId}, game);
 });
 
+// PUT http://localhost:5202/games/:gameId
+app.MapPut("games/{GameId}", (int GameId, UpdateGameDto updatedGame) => 
+{
+   var gameIndex = games.FindIndex(game => game.GameId == GameId);
+
+   games[gameIndex] = new GameDto(
+      GameId,
+      updatedGame.Name,
+      updatedGame.Genre,
+      updatedGame.Price,
+      updatedGame.ReleaseDate
+   ); 
+});
 
 
 // root route rendering "Hello World!" text

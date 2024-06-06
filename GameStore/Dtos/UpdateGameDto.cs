@@ -1,4 +1,4 @@
-﻿namespace GameStore;
+﻿namespace GameStore.Dtos;
 
 public record class UpdateGameDto(
   string Name, 
