@@ -32,7 +32,12 @@ List<GameDto> games = [
 app.MapGet("games", () => games);
 
 // GET http://localhost:5202/games/:gameId
-app.MapGet("games/{gameId}", (int gameId) => games.Find(game => game.GameId == gameId)).WithName(GetGameEndpointName);
+app.MapGet("games/{gameId}", (int gameId) => 
+{
+   GameDto? game = games.Find(game => game.GameId == gameId);
+   return game is null ? Results.NotFound() : Results.Ok(game);
+})
+.WithName(GetGameEndpointName);
 
 // POST http://localhost:5202/games/
 app.MapPost("games", (CreateGameDto newGame) => {

@@ -3,7 +3,7 @@ GET http://localhost:5202/games
 # The three number hashes are to split requests or else it'll hit the very top one only instead of the one you clicked on to send a request
 
 ### 
-GET http://localhost:5202/games/3
+GET http://localhost:5202/games/4
 
 ###
 POST http://localhost:5202/games
