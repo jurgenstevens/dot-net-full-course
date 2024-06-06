@@ -63,6 +63,13 @@ app.MapPut("games/{gameId}", (int gameId, UpdateGameDto updatedGame) =>
    return Results.NoContent();
 });
 
+// DELETE http://localhost:5202/games/:gameId
+app.MapDelete("games/{gameId}", (int gameId) =>
+{
+   games.RemoveAll(game => game.GameId == gameId);
+   return Results.NoContent();
+});
+
 
 // root route rendering "Hello World!" text
 // app.MapGet("/", () => "Hello World!");
