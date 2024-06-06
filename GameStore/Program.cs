@@ -32,7 +32,7 @@ List<GameDto> games = [
 app.MapGet("games", () => games);
 
 // GET http://localhost:5202/games/:gameId
-app.MapGet("games/{GameId}", (int GameId) => games.Find(game => game.GameId == GameId)).WithName(GetGameEndpointName);
+app.MapGet("games/{gameId}", (int gameId) => games.Find(game => game.GameId == gameId)).WithName(GetGameEndpointName);
 
 // POST http://localhost:5202/games/
 app.MapPost("games", (CreateGameDto newGame) => {
@@ -48,17 +48,19 @@ app.MapPost("games", (CreateGameDto newGame) => {
 });
 
 // PUT http://localhost:5202/games/:gameId
-app.MapPut("games/{GameId}", (int GameId, UpdateGameDto updatedGame) => 
+app.MapPut("games/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
 {
-   var gameIndex = games.FindIndex(game => game.GameId == GameId);
+   var gameIndex = games.FindIndex(game => game.GameId == gameId);
 
    games[gameIndex] = new GameDto(
-      GameId,
+      gameId,
       updatedGame.Name,
       updatedGame.Genre,
       updatedGame.Price,
       updatedGame.ReleaseDate
    ); 
+
+   return Results.NoContent();
 });
 
 
