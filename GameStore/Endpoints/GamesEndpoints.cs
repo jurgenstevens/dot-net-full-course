@@ -31,11 +31,14 @@ public static class GamesEndpoints
 
   public static WebApplication MapGamesEndpoints(this WebApplication app)
   {
+
+    var group = app.MapGroup("games");
+
     // GET http://localhost:5202/games index route for games in JSON format
-    app.MapGet("games", () => games);
+    group.MapGet("/", () => games);
 
     // GET http://localhost:5202/games/:gameId
-    app.MapGet("games/{gameId}", (int gameId) => 
+    group.MapGet("/{gameId}", (int gameId) => 
     {
       GameDto? game = games.Find(game => game.GameId == gameId);
       return game is null ? Results.NotFound() : Results.Ok(game);
@@ -43,7 +46,7 @@ public static class GamesEndpoints
     .WithName(GetGameEndpointName);
 
     // POST http://localhost:5202/games/
-    app.MapPost("games", (CreateGameDto newGame) => {
+    group.MapPost("/", (CreateGameDto newGame) => {
       GameDto game = new(
           games.Count + 1,
           newGame.Name,
@@ -56,7 +59,7 @@ public static class GamesEndpoints
     });
 
     // PUT http://localhost:5202/games/:gameId
-    app.MapPut("games/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
+    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
     {
       var gameIndex = games.FindIndex(game => game.GameId == gameId);
 
@@ -76,11 +79,12 @@ public static class GamesEndpoints
     });
 
     // DELETE http://localhost:5202/games/:gameId
-    app.MapDelete("games/{gameId}", (int gameId) =>
+    group.MapDelete("/{gameId}", (int gameId) =>
     {
       games.RemoveAll(game => game.GameId == gameId);
       return Results.NoContent();
     });
+
     return app;  
   }
 }
