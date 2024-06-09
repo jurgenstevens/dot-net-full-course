@@ -1,4 +1,5 @@
-﻿namespace GameStore.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+namespace GameStore.Dtos;
 
 public record class CreateGameDto(
   [Required][StringLength(50)] string Name, 
