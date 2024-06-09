@@ -31,7 +31,7 @@ public static class GamesEndpoints
 
   public static WebApplication MapGamesEndpoints(this WebApplication app)
   {
-
+    // can't return group, but practicing using route groups for future projects
     var group = app.MapGroup("games");
 
     // GET http://localhost:5202/games index route for games in JSON format
@@ -47,6 +47,10 @@ public static class GamesEndpoints
 
     // POST http://localhost:5202/games/
     group.MapPost("/", (CreateGameDto newGame) => {
+      if(string.IsNullOrEmpty(newGame.Name)){
+        return Results.BadRequest("Name is required.");
+      };
+
       GameDto game = new(
           games.Count + 1,
           newGame.Name,
