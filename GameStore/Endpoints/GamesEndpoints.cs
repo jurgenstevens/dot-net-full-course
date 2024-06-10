@@ -32,7 +32,8 @@ public static class GamesEndpoints
   public static WebApplication MapGamesEndpoints(this WebApplication app)
   {
     // can't return group, but practicing using route groups for future projects
-    var group = app.MapGroup("games");
+    var group = app.MapGroup("games")
+                    .WithParameterValidation();
 
     // GET http://localhost:5202/games index route for games in JSON format
     group.MapGet("/", () => games);
