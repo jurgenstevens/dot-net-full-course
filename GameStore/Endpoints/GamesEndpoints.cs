@@ -38,8 +38,7 @@ public static class GamesEndpoints
     group.MapGet("/", () => games);
 
     // GET http://localhost:5202/games/:gameId
-    group.MapGet("/{gameId}", (int gameId) => 
-    {
+    group.MapGet("/{gameId}", (int gameId) => {
       GameDto? game = games.Find(game => game.GameId == gameId);
       return game is null ? Results.NotFound() : Results.Ok(game);
     })
@@ -64,8 +63,7 @@ public static class GamesEndpoints
     // .WithParameterValidation();
 
     // PUT http://localhost:5202/games/:gameId
-    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
-    {
+    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => {
       var gameIndex = games.FindIndex(game => game.GameId == gameId);
 
       if(gameIndex == -1){
@@ -84,8 +82,7 @@ public static class GamesEndpoints
     });
 
     // DELETE http://localhost:5202/games/:gameId
-    group.MapDelete("/{gameId}", (int gameId) =>
-    {
+    group.MapDelete("/{gameId}", (int gameId) => {
       games.RemoveAll(game => game.GameId == gameId);
       return Results.NoContent();
     });
