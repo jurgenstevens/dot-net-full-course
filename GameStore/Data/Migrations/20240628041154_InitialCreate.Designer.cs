@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GameStore.Data.Migrations
+namespace GameStore.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    [Migration("20240628004917_InitialCreate")]
+    [Migration("20240628041154_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
