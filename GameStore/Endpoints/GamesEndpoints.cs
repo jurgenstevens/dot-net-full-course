@@ -45,7 +45,8 @@ public static class GamesEndpoints
     .WithName(GetGameEndpointName);
 
     // POST http://localhost:5202/games/
-    group.MapPost("/", (CreateGameDto newGame) => {
+    group.MapPost("/", (CreateGameDto newGame) => 
+    {
       // if(string.IsNullOrEmpty(newGame.Name)){
       //   return Results.BadRequest("Name is required.");
       // };
@@ -63,7 +64,8 @@ public static class GamesEndpoints
     // .WithParameterValidation();
 
     // PUT http://localhost:5202/games/:gameId
-    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => {
+    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
+    {
       var gameIndex = games.FindIndex(game => game.GameId == gameId);
 
       if(gameIndex == -1){
@@ -82,7 +84,8 @@ public static class GamesEndpoints
     });
 
     // DELETE http://localhost:5202/games/:gameId
-    group.MapDelete("/{gameId}", (int gameId) => {
+    group.MapDelete("/{gameId}", (int gameId) => 
+    {
       games.RemoveAll(game => game.GameId == gameId);
       return Results.NoContent();
     });
