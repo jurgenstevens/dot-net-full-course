@@ -45,7 +45,7 @@ public static class GamesEndpoints
     .WithName(GetGameEndpointName);
 
     // POST http://localhost:5202/games/
-    group.MapPost("/", (CreateGameDto newGame) => 
+    group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) => 
     {
       // if(string.IsNullOrEmpty(newGame.Name)){
       //   return Results.BadRequest("Name is required.");
