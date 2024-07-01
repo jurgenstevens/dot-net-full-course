@@ -51,14 +51,27 @@ public static class GamesEndpoints
       //   return Results.BadRequest("Name is required.");
       // };
 
-      GameDto game = new (
-          games.Count + 1,
-          newGame.Name,
-          newGame.Genre,
-          newGame.Price,
-          newGame.ReleaseDate
-      );
-      games.Add(game);
+      Game game = new()
+      {
+        Name = newGame.Name,
+        Genre = dbContext.Genre.Find(newGame.GenreId),
+        GenreId = newGame.GenreId,
+        Price = newGame.Price,
+        ReleaseDate = newGame.ReleaseDate,
+      }
+
+      dbContext.Games.Add(game);
+      dbContext.SaveChanges();
+
+      // GameDto game = new (
+      //     games.Count + 1,
+      //     newGame.Name,
+      //     newGame.Genre,
+      //     newGame.Price,
+      //     newGame.ReleaseDate
+      // );
+      // games.Add(game);
+
       return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.GameId}, game);
     });
     // .WithParameterValidation();
