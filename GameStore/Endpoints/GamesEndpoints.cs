@@ -9,7 +9,7 @@ public static class GamesEndpoints
 {
   const string GetGameEndpointName = "GetGame";
 
-  private static readonly List<GameDto> games = new()
+  private static readonly List<GameSummaryDto> games = new()
   {
     new (
         1, 
@@ -58,7 +58,7 @@ public static class GamesEndpoints
       return Results.CreatedAtRoute(
         GetGameEndpointName, 
         new { GameId = game.Id }, 
-        game.ToDto());
+        game.ToSummaryDto());
     });
 
     // PUT http://localhost:5202/games/:gameId
@@ -70,7 +70,7 @@ public static class GamesEndpoints
           return Results.NotFound();
       }
 
-      games[gameIndex] = new GameDto(
+      games[gameIndex] = new GameSummaryDto(
           gameId,
           updatedGame.Name,
           updatedGame.Genre,
