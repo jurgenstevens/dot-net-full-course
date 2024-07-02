@@ -25,4 +25,15 @@ public static class GameMapping
       game.ReleaseDate
     );
   }
+
+    public static GameDetailsDto ToGameDetailsDto(this Game game)
+  {
+      return new(
+      game.Id,
+      game.Name,
+      game.GenreId,
+      game.Price,
+      game.ReleaseDate
+    );
+  }
 }
