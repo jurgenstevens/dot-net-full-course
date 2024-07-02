@@ -1,4 +1,6 @@
-﻿using GameStore.Dtos;
+﻿using GameStore.Data;
+using GameStore.Dtos;
+using GameStore.Entities;
 
 namespace GameStore.Endpoints;
 
@@ -6,7 +8,8 @@ public static class GamesEndpoints
 {
   const string GetGameEndpointName = "GetGame";
 
-  private static readonly List<GameDto> games = [
+  private static readonly List<GameDto> games = new()
+  {
     new (
         1, 
         "Street Fighter II", 
@@ -18,16 +21,14 @@ public static class GamesEndpoints
         "Final Fantasy XIV",  
         "Roleplaying", 
         59.99M, 
-        new DateOnly(2010, 9, 30)
-        ),
+        new DateOnly(2010, 9, 30)),
     new (
         3, 
         "FIFA 23", 
         "Sports", 
         69.99M, 
-        new DateOnly(2022, 9, 27)
-    ),
-  ];
+        new DateOnly(2022, 9, 27))
+  };
 
   public static WebApplication MapGamesEndpoints(this WebApplication app)
   {
@@ -47,34 +48,20 @@ public static class GamesEndpoints
     // POST http://localhost:5202/games/
     group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) => 
     {
-      // if(string.IsNullOrEmpty(newGame.Name)){
-      //   return Results.BadRequest("Name is required.");
-      // };
+        GameStore.Entities.Game game = new()
+        {
+            Name = newGame.Name,
+            Genre = dbContext.Genres.Find(newGame.GenreId),
+            GenreId = newGame.GenreId,
+            Price = newGame.Price,
+            ReleaseDate = newGame.ReleaseDate,
+        };
 
-      Game game = new()
-      {
-        Name = newGame.Name,
-        Genre = dbContext.Genre.Find(newGame.GenreId),
-        GenreId = newGame.GenreId,
-        Price = newGame.Price,
-        ReleaseDate = newGame.ReleaseDate,
-      }
+        dbContext.Games.Add(game);
+        dbContext.SaveChanges();
 
-      dbContext.Games.Add(game);
-      dbContext.SaveChanges();
-
-      // GameDto game = new (
-      //     games.Count + 1,
-      //     newGame.Name,
-      //     newGame.Genre,
-      //     newGame.Price,
-      //     newGame.ReleaseDate
-      // );
-      // games.Add(game);
-
-      return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.GameId}, game);
+        return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.Id }, game);
     });
-    // .WithParameterValidation();
 
     // PUT http://localhost:5202/games/:gameId
     group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
