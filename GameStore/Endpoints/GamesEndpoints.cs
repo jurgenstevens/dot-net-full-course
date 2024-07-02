@@ -58,7 +58,7 @@ public static class GamesEndpoints
       return Results.CreatedAtRoute(
         GetGameEndpointName, 
         new { GameId = game.Id }, 
-        game.ToDto);
+        game.ToDto());
     });
 
     // PUT http://localhost:5202/games/:gameId
