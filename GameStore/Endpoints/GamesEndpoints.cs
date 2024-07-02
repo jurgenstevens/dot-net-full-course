@@ -63,12 +63,12 @@ public static class GamesEndpoints
         GameDto gameDto = new(
           game.Id,
           game.Name,
-          game.Genre.Name,
+          game.Genre!.Name,
           game.Price,
           game.ReleaseDate
         );
 
-        return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.Id }, game);
+        return Results.CreatedAtRoute(GetGameEndpointName, new { GameId = game.Id }, gameDto);
     });
 
     // PUT http://localhost:5202/games/:gameId

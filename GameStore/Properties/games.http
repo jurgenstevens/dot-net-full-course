@@ -10,10 +10,10 @@ POST http://localhost:5202/games
 Content-Type: application/json
 
 {
-  "name": "Minecraft",
-  "genreId": 5,
-  "price": 19.99,
-  "releaseData": "2011-11-18"
+  "name": "Street Fighter II",
+  "genreId": 1,
+  "price": 9.99,
+  "releaseData": "1991-02-01"
 }
 
 ###
