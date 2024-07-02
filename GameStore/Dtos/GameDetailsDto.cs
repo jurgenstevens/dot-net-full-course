@@ -1,9 +1,9 @@
-﻿namespace GameStore;
+﻿namespace GameStore.Dtos;
 
 public record class GameDetailsDto(
-  int GameId, 
-  string Name, 
+  int GameId,
+  string Name,
   int GenreId,
-  decimal Price, 
+  decimal Price,
   DateOnly ReleaseDate
 );
