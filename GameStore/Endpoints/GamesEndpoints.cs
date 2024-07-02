@@ -42,7 +42,7 @@ public static class GamesEndpoints
     // GET http://localhost:5202/games/:gameId
     group.MapGet("/{gameId}", (int gameId, GameStoreContext dbContext) => {
       Game? game = dbContext.Games.Find(gameId);
-      return game is null ? Results.NotFound() : Results.Ok(game);
+      return game is null ? Results.NotFound() : Results.Ok(game.ToGameDetailsDto());
     })
     .WithName(GetGameEndpointName);
 
