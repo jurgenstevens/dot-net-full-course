@@ -50,7 +50,7 @@ public static class GamesEndpoints
     group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) => 
     {
       Game game = newGame.ToEntity();
-      game.Genre = dbContext.Genres.Find(newGame.GenreId);
+      // game.Genre = dbContext.Genres.Find(newGame.GenreId);
 
       dbContext.Games.Add(game);
       dbContext.SaveChanges();
@@ -58,7 +58,7 @@ public static class GamesEndpoints
       return Results.CreatedAtRoute(
         GetGameEndpointName, 
         new { GameId = game.Id }, 
-        game.ToSummaryDto());
+        game.ToGameDetailsDto());
     });
 
     // PUT http://localhost:5202/games/:gameId

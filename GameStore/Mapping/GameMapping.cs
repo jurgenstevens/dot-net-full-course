@@ -17,7 +17,7 @@ public static class GameMapping
 
   public static GameSummaryDto ToSummaryDto(this Game game)
   {
-      return new(
+    return new(
       game.Id,
       game.Name,
       game.Genre!.Name,
@@ -28,7 +28,7 @@ public static class GameMapping
 
     public static GameDetailsDto ToGameDetailsDto(this Game game)
   {
-      return new(
+    return new(
       game.Id,
       game.Name,
       game.GenreId,
