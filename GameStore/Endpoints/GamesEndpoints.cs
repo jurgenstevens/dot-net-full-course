@@ -48,7 +48,7 @@ public static class GamesEndpoints
     // POST http://localhost:5202/games/
     group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) => 
     {
-        GameStore.Entities.Game game = new()
+        Game game = new()
         {
             Name = newGame.Name,
             Genre = dbContext.Genres.Find(newGame.GenreId),
