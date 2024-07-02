@@ -7,7 +7,20 @@ public static class GameMapping
 {
   public static Game ToEntity(this CreateGameDto game)
   {
-    return new(){
+    return new Game()
+    {
+      Name = game.Name,
+      GenreId = game.GenreId,
+      Price = game.Price,
+      ReleaseDate = game.ReleaseDate
+    };
+  }
+
+    public static Game ToEntity(this UpdateGameDto game, int gameId)
+  {
+    return new Game()
+    {
+      Id = gameId,
       Name = game.Name,
       GenreId = game.GenreId,
       Price = game.Price,
