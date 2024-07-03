@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
   "name": "Spyro The Dragon",
-  "genre": "Action-Adventure",
+  "genreId": 5,
   "price": 29.99,
   "releaseDate": "1998-09-09"
 }

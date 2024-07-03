@@ -28,7 +28,7 @@ public static class GameMapping
     };
   }
 
-  public static GameSummaryDto ToSummaryDto(this Game game)
+  public static GameSummaryDto ToGameSummaryDto(this Game game)
   {
     return new(
       game.Id,
