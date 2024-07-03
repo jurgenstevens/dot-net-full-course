@@ -2,6 +2,7 @@
 using GameStore.Dtos;
 using GameStore.Entities;
 using GameStore.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Endpoints;
 
@@ -62,21 +63,15 @@ public static class GamesEndpoints
     });
 
     // PUT http://localhost:5202/games/:gameId
-    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame) => 
+    group.MapPut("/{gameId}", (int gameId, UpdateGameDto updatedGame, GameStoreContext dbContext) => 
     {
-      var gameIndex = games.FindIndex(game => game.GameId == gameId);
-
-      if(gameIndex == -1){
+      var existingGame = dbContext.Games.Find(gameId)
+      if (existingGame is null){
           return Results.NotFound();
-      }
+      };
 
-      games[gameIndex] = new GameSummaryDto(
-          gameId,
-          updatedGame.Name,
-          updatedGame.Genre,
-          updatedGame.Price,
-          updatedGame.ReleaseDate
-      ); 
+      dbContext.Entry(existingGame).CurrentValues.SetValues(updatedGame.ToEntity(gameId));
+      dbContext.SaveChanges();
 
       return Results.NoContent();
     });
