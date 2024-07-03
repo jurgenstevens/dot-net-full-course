@@ -12,7 +12,7 @@ var app = builder.Build();
 // all of the game data and game CRUD routes/endpoints and controller functions live here
 app.MapGamesEndpoints();
 // this extends our web application object
-app.MigrateDb();
+await app.MigrateDbAsync();
 
 app.Run();
 
