@@ -38,7 +38,10 @@ public static class GamesEndpoints
     var group = app.MapGroup("games").WithParameterValidation();
 
     // GET http://localhost:5202/games index route for games in JSON format
-    group.MapGet("/", (GameStoreContext dbContext) => dbContext.Games.Include(game => game.Genre).Select(game => game.ToGameSummaryDto()));
+    group.MapGet("/", (GameStoreContext dbContext) => dbContext.Games
+                                                                .Include(game => game.Genre)
+                                                                .Select(game => game.ToGameSummaryDto())
+                                                                .AsNoTracking());
 
     // GET http://localhost:5202/games/:gameId
     group.MapGet("/{gameId}", (int gameId, GameStoreContext dbContext) => {
@@ -77,9 +80,9 @@ public static class GamesEndpoints
     });
 
     // DELETE http://localhost:5202/games/:gameId
-    group.MapDelete("/{gameId}", (int gameId) => 
+    group.MapDelete("/{gameId}", (int gameId, GameStoreContext dbContext) => 
     {
-      games.RemoveAll(game => game.GameId == gameId);
+      dbContext.Games.Where(game => game.Id == gameId).ExecuteDelete();
       return Results.NoContent();
     });
 
