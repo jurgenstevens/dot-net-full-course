@@ -1,6 +1,3 @@
 ﻿namespace GameStore.Dtos;
 
-public class GenreDto
-{
-  
-}
+public record class GenreDto(int Id, string Name);
