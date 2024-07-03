@@ -38,7 +38,7 @@ public static class GamesEndpoints
     var group = app.MapGroup("games").WithParameterValidation();
 
     // GET http://localhost:5202/games index route for games in JSON format
-    group.MapGet("/", (GameStoreContext dbContext) => dbContext.Games.Select(game => game.ToGameSummaryDto()));
+    group.MapGet("/", (GameStoreContext dbContext) => dbContext.Games.Include(game => game.Genre).Select(game => game.ToGameSummaryDto()));
 
     // GET http://localhost:5202/games/:gameId
     group.MapGet("/{gameId}", (int gameId, GameStoreContext dbContext) => {
